@@ -1,24 +1,22 @@
 import "./globals.css";
 import { Plus_Jakarta_Sans } from "next/font/google";
-
 const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["600"], // SemiBold
+ subsets: ["latin"],
+ weight: ["300", "400", "500", "600", "700"],
+ variable: "--font-plus-jakarta",
 });
-
 export const metadata = {
-  title: "Seravion",
-  description: "Landing Page",
+ title: "Seravion Technologies",
+ description: "Engineering the future of digital experience",
 };
-
 export default function RootLayout({
-  children,
+ children,
 }: {
-  children: React.ReactNode;
+ children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={plusJakarta.className}>{children}</body>
-    </html>
-  );
+ return (
+   <html lang="en">
+     <body className={`${plusJakarta.variable} ${plusJakarta.className}`}>{children}</body>
+   </html>
+ );
 }
