@@ -3,12 +3,12 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["600"], // SemiBold
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata = {
-  title: "Seravion",
-  description: "Landing Page",
+  title: "Seravion Technologies",
+  description: "Engineering the future of digital experience",
 };
 
 export default function RootLayout({
