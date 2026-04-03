@@ -11,7 +11,7 @@ const Navbar = () => {
     <header className="w-full fixed top-0 left-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-8 py-4">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <Image src="/logo.png" alt="Seravion Logo" width={36} height={36} />
           <div className="leading-tight">
             <p className="text-black font-semibold text-lg tracking-tight">
@@ -21,7 +21,7 @@ const Navbar = () => {
               Technologies
             </p>
           </div>
-        </div>
+        </Link>
 
         {/* Nav Links */}
         <nav className="hidden lg:flex items-center font-normal text-sm gap-8 text-gray-600">
