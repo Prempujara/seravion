@@ -1,103 +1,124 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const projects = [
   {
     tag: "Web App",
     title: "FinanceFlow Dashboard",
-    desc: "A real-time financial analytics platform with AI-powered insights and beautiful data visualization.",
+    desc: "AI-powered financial analytics platform with real-time insights.",
     gradient: "from-blue-400 to-blue-600",
-    accent: "bg-blue-100 text-blue-700",
   },
   {
     tag: "Mobile App",
     title: "HealthTrack Pro",
-    desc: "A comprehensive health and wellness application connecting patients with healthcare providers seamlessly.",
+    desc: "Smart health tracking connecting patients with doctors seamlessly.",
     gradient: "from-emerald-400 to-teal-600",
-    accent: "bg-emerald-100 text-emerald-700",
   },
   {
     tag: "E-Commerce",
     title: "LuxeShop Platform",
-    desc: "A premium e-commerce experience delivering luxury retail with personalized recommendations and AR try-on.",
+    desc: "Luxury e-commerce experience with AR try-on and personalization.",
     gradient: "from-violet-400 to-purple-600",
-    accent: "bg-violet-100 text-violet-700",
   },
   {
     tag: "SaaS",
     title: "TeamSync Workspace",
-    desc: "Collaborative workspace tool streamlining remote team productivity with smart automation.",
+    desc: "Collaborative workspace boosting remote productivity.",
     gradient: "from-amber-400 to-orange-500",
-    accent: "bg-amber-100 text-amber-700",
   },
 ];
 
 const Work = () => {
-  const [active, setActive] = useState(0);
-
-  const next = () => {
-    setActive((prev) => (prev + 1) % projects.length);
-  };
-
-  const prev = () => {
-    setActive((prev) => (prev - 1 + projects.length) % projects.length);
-  };
-
-  const project = projects[active];
+  const [active, setActive] = useState(1);
 
   return (
-    <section className="bg-white py-24 px-6">
-      <div className="max-w-5xl mx-auto">
+    <section className="bg-white py-40 flex items-center">
+      
+      <div className="max-w-7xl mx-auto w-full flex px-6 gap-12">
 
-        {/* Header */}
-        <div className="mb-12">
-          <h2 className="text-4xl font-semibold">Projects we're proud of</h2>
-        </div>
+        {/* LEFT SIDE TEXT */}
+        <div className="w-1/2 flex flex-col justify-center">
+          
+          <span className="text-sm text-gray-400 uppercase tracking-wide">
+            Our Work
+          </span>
 
-        {/* Slider */}
-        <div className="relative h-[400px] overflow-hidden">
+          <h2 className="mt-4 text-4xl md:text-5xl font-semibold text-black leading-tight">
+            Crafted digital experiences that drive impact
+          </h2>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -100, opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute w-full"
-            >
-              <div className="rounded-2xl overflow-hidden border shadow-lg">
+          <p className="mt-6 text-gray-500 max-w-md">
+            We build products that blend design, technology, and strategy 
+            to create meaningful digital experiences.
+          </p>
 
-                {/* Gradient */}
-                <div className={`h-56 bg-gradient-to-br ${project.gradient}`} />
-
-                {/* Content */}
-                <div className="p-6">
-                  <span className={`text-xs px-3 py-1 rounded ${project.accent}`}>
-                    {project.tag}
-                  </span>
-
-                  <h3 className="mt-3 text-xl font-semibold">
-                    {project.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm text-gray-500">
-                    {project.desc}
-                  </p>
-                </div>
-
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <button className="mt-8 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg w-fit transition">
+            Explore Projects
+          </button>
 
         </div>
 
-        {/* Controls */}
-        <div className="flex justify-between mt-6">
-          <button onClick={prev}>← Prev</button>
-          <button onClick={next}>Next →</button>
+        {/* RIGHT SIDE STACK */}
+        <div className="w-1/2 flex justify-center items-center">
+          
+          <div className="relative h-[650px] w-full max-w-xl">
+
+            {projects.map((project, index) => {
+              const offset = index - active;
+
+              return (
+                <motion.div
+                  key={index}
+                  onMouseEnter={() => setActive(index)}
+                  className="absolute w-full h-[340px] cursor-pointer"
+                  animate={{
+                    y: offset * 100,
+                    scale: offset === 0 ? 1 : 0.88,
+                    opacity: offset === 0 ? 1 : 0.35,
+                    zIndex: 10 - Math.abs(offset),
+                  }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  
+                  <div
+                    className={`
+                      w-full h-full rounded-3xl overflow-hidden
+                      bg-gradient-to-br ${project.gradient}
+                      shadow-2xl p-8 flex flex-col justify-between
+                      text-white
+                    `}
+                  >
+                    
+                    <div>
+                      <span className="text-xs bg-white/20 px-3 py-1 rounded-full">
+                        {project.tag}
+                      </span>
+
+                      <h3 className="mt-5 text-2xl font-semibold">
+                        {project.title}
+                      </h3>
+
+                      <p className="mt-3 text-sm text-white/80 max-w-xs">
+                        {project.desc}
+                      </p>
+                    </div>
+
+                    <div className="text-sm font-medium">
+                      View Case Study →
+                    </div>
+
+                  </div>
+
+                </motion.div>
+              );
+            })}
+
+          </div>
         </div>
 
       </div>

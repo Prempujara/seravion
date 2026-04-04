@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar/navbar";
 import Hero from "@/components/hero/hero";
+import Landing from "@/components/landingpage/landing";
 import Stats from "@/components/stats/stats";
 import Services from "@/components/services/services";
 import Work from "@/components/work/work";
@@ -10,10 +11,11 @@ export default function Home() {
  return (
    <main className="bg-white min-h-screen flex flex-col">
      <Navbar />
+     <Landing />
      <Hero/>
-     <Stats />
-     <Services />
      <Work />
+     <Services />
+     <Stats />
      <Testimonials />
      <CTA />
      <Footer />
