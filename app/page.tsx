@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar/navbar";
-import Hero from "@/components/hero/hero";
+
 import Landing from "@/components/landingpage/landing";
 import Stats from "@/components/stats/stats";
 import Services from "@/components/services/services";
@@ -12,7 +12,6 @@ export default function Home() {
    <main className="bg-white min-h-screen flex flex-col">
      <Navbar />
      <Landing />
-     <Hero/>
      <Work />
      <Services />
      <Stats />
