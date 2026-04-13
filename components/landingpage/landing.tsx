@@ -1,42 +1,90 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Landing = () => {
-  const [progress, setProgress] = useState(0);
+  const containerRef = useRef(null);
+  const videoWrapperRef = useRef(null);
+  const textRef = useRef(null);
+  const deviceRef = useRef(null);
+  const fullscreenVideoRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const maxScroll = 400;
-      const current = window.scrollY;
-      const raw = Math.min(current / maxScroll, 1);
+    gsap.registerPlugin(ScrollTrigger);
 
-      // Smooth easing
-      const eased = 1 - Math.pow(1 - raw, 3);
+    // INITIAL POSITION (controlled by GSAP)
+    gsap.set(videoWrapperRef.current, {
+      top: "50%",
+      left: "50%",
+      xPercent: -50,
+      yPercent: -30,
+      width: "70%",
+      height: "70%",
+      borderRadius: "20px",
+    });
 
-      setProgress(eased);
-    };
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=1500",
+        scrub: 1,
+        pin: true,
+      },
+    });
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // TEXT FADE
+    tl.to(textRef.current, {
+      opacity: 0,
+      y: -80,
+      ease: "power2.out",
+    });
+
+    // VIDEO EXPAND
+    tl.to(
+      videoWrapperRef.current,
+      {
+        width: "100vw",
+        height: "100vh",
+        yPercent: -50,
+        borderRadius: 0,
+        ease: "power3.out",
+      },
+      0
+    );
+
+    // DEVICE FADE OUT
+    tl.to(
+      deviceRef.current,
+      {
+        opacity: 0,
+        ease: "power2.out",
+      },
+      0.3
+    );
+
+    // FULLSCREEN VIDEO FADE IN
+    tl.to(
+      fullscreenVideoRef.current,
+      {
+        opacity: 1,
+        ease: "power2.out",
+      },
+      0.5
+    );
   }, []);
 
-  // 🔥 Threshold
-  const isFullscreen = progress > 0.9;
-
   return (
-    <section className="relative h-[200vh] bg-white">
+    <section ref={containerRef} className="relative h-[300vh] bg-white">
       <div className="sticky top-0 h-screen overflow-hidden">
 
         {/* TEXT */}
         <div
+          ref={textRef}
           className="absolute inset-0 flex flex-col items-center justify-start pt-20 text-center z-30 px-6"
-          style={{
-            opacity: isFullscreen ? 0 : 1 - progress,
-            transform: `translateY(${-60 * progress}px)`,
-            transition: "all 0.4s ease-out",
-          }}
         >
           <h1 className="font-semibold text-3xl md:text-[64px] leading-[120%] text-black max-w-4xl">
             Engineering the future of <br />
@@ -50,34 +98,27 @@ const Landing = () => {
 
         {/* DEVICE */}
         <div
+          ref={deviceRef}
           className="absolute inset-0 flex items-end justify-center z-20 pointer-events-none"
-          style={{
-            opacity: isFullscreen ? 0 : 1,
-            transition: "opacity 0.4s ease-out",
-          }}
         >
-          <div className="relative w-full max-w-5xl h-[400px] md:h-[500px]">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-75 md:h-[380px]">
             <Image
-              src="/placeholder.png"
+              src="/tab.png"
               alt="Device"
               fill
               className="object-cover"
               priority
             />
 
-            {/* VIDEO (EXPANDING) */}
+            {/* ✅ VIDEO WRAPPER (Adjusted width ↓ and height ↑) */}
             <div
-              className="absolute top-1/2 left-1/2 overflow-hidden"
+              ref={videoWrapperRef}
+              className="absolute overflow-hidden rounded-[16px]"
               style={{
-                width: "70%",
-                height: "70%",
-                transform: `
-                  translate(-50%, -30%)
-                  translateY(${-350 * progress}px)
-                  scale(${1 + progress * 2.2})
-                `,
-                borderRadius: `${20 - 20 * progress}px`,
-                willChange: "transform",
+                top: "50%",
+                left: "49.5%",
+                width: "62%",   // reduced width
+                height: "85%",  // increased height
               }}
             >
               <video
@@ -94,11 +135,8 @@ const Landing = () => {
 
         {/* FULLSCREEN VIDEO */}
         <div
-          className="absolute inset-0 z-10"
-          style={{
-            opacity: progress,
-            transition: "opacity 0.4s ease-out",
-          }}
+          ref={fullscreenVideoRef}
+          className="absolute inset-0 z-10 opacity-0"
         >
           <video
             src="/hero-video.mp4"
