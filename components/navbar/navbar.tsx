@@ -9,7 +9,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // adjust this value based on when video becomes dominant
       setDarkMode(window.scrollY > 100);
     };
 
@@ -21,8 +20,8 @@ const Navbar = () => {
     <header
       className="
         fixed top-0 left-0 w-full z-50
-        backdrop-blur-md
-        bg-white/10
+        backdrop-blur-[2px]
+        bg-white/[0.01]
         border-b border-white/10
         shadow-[0_8px_32px_rgba(0,0,0,0.08)]
         transition-all duration-300
@@ -86,7 +85,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden backdrop-blur-md bg-white/20 border-t border-white/10 px-6 py-4 flex flex-col gap-4 text-sm">
+        <div className="md:hidden backdrop-blur-[2px] bg-white/[0.02] border-t border-white/10 px-6 py-4 flex flex-col gap-4 text-sm">
           <Link href="#">About Us</Link>
           <Link href="#">Work+</Link>
           <Link href="#">Industries+</Link>
