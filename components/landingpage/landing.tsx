@@ -1,105 +1,115 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Landing = () => {
   const containerRef = useRef(null);
-  const textRef = useRef(null);
+  const initialTextRef = useRef(null);
+  const finalTextRef = useRef(null);
   const deviceRef = useRef(null);
   const videoWrapperRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.ticker.lagSmoothing(0);
-    gsap.config({ force3D: true });
+    const ctx = gsap.context(() => {
+      const device = deviceRef.current;
+      const videoWrapper = videoWrapperRef.current;
+      const finalText = finalTextRef.current;
 
-    const device = deviceRef.current;
-    const videoWrapper = videoWrapperRef.current;
+      const getScale = () => {
+        const rect = videoWrapper.getBoundingClientRect();
+        const scaleX = window.innerWidth / rect.width;
+        const scaleY = window.innerHeight / rect.height;
+        return Math.max(scaleX, scaleY);
+      };
 
-    // 🔥 calculate perfect fullscreen scale based on VIDEO (not device)
-    const rect = videoWrapper.getBoundingClientRect();
-    const scaleX = window.innerWidth / rect.width;
-    const scaleY = window.innerHeight / rect.height;
-    const finalScale = Math.max(scaleX, scaleY); // 🔥 cover entire screen
+      let finalScale = getScale();
 
-    gsap.set(device, {
-      scale: 0.85,
-      y: 0,
-      transformOrigin: "center center",
-      willChange: "transform, opacity",
-    });
+      ScrollTrigger.addEventListener("refreshInit", () => {
+        finalScale = getScale();
+      });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=2600",
-        scrub: 1.2,
-        pin: true,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
-      },
-      defaults: {
-        ease: "none",
-      },
-    });
-
-    // TEXT OUT
-    tl.to(textRef.current, {
-      opacity: 0,
-      y: -80,
-      duration: 0.6,
-    });
-
-    // 🔥 SCALE DEVICE (based on video size)
-    tl.to(
-      device,
-      {
-        scale: finalScale,
-        y: -window.innerHeight * 0.25,
-        duration: 2.2,
-      },
-      0
-    );
-
-    // 🔥 HIDE IPAD FRAME (smooth)
-    tl.to(
-      device.querySelector("img"),
-      {
+      gsap.set(finalText, {
+        y: 140,
         opacity: 0,
+      });
+
+      gsap.set(device, {
+        scale: 0.85,
+        y: 0,
+        transformOrigin: "center center",
+        willChange: "transform, opacity",
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=2600",
+          scrub: 1.6,
+          pin: true,
+          anticipatePin: 1,
+          fastScrollEnd: true,
+        },
+        defaults: {
+          ease: "none",
+        },
+      });
+
+      tl.to(initialTextRef.current, {
+        opacity: 0,
+        y: -80,
         duration: 0.6,
-      },
-      1.4
-    );
+      });
 
-    tl.to({}, { duration: 0.5 });
-    tl.to({}, { duration: 1.5 });
+      tl.to(
+        device,
+        {
+          scale: finalScale,
+          y: -window.innerHeight * 0.25,
+          duration: 2.2,
+        },
+        0
+      );
 
-    let rafId;
-    const raf = () => {
-      ScrollTrigger.update();
-      rafId = requestAnimationFrame(raf);
-    };
-    rafId = requestAnimationFrame(raf);
+      tl.to(
+        device.querySelector("img"),
+        {
+          opacity: 0,
+          duration: 0.6,
+        },
+        1.4
+      );
 
-    return () => {
-      cancelAnimationFrame(rafId);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+      tl.to(
+        finalText,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 2.4,
+          ease: "power4.out",
+        },
+        2
+      );
+
+      tl.to({}, { duration: 0.5 });
+      tl.to({}, { duration: 1.5 });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
     <section ref={containerRef} className="relative h-[320vh] bg-white">
       <div className="sticky top-0 h-screen overflow-hidden">
-        
-        {/* TEXT */}
+
+        {/* INITIAL TEXT */}
         <div
-          ref={textRef}
+          ref={initialTextRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 px-6 -translate-y-16 md:-translate-y-28"
         >
           <h1 className="font-semibold text-3xl md:text-[64px] leading-[120%] text-[#232323] max-w-4xl">
@@ -112,13 +122,46 @@ const Landing = () => {
           </button>
         </div>
 
+        {/* FINAL TEXT */}
+        <div
+          ref={finalTextRef}
+          className="absolute inset-0 flex flex-col justify-between z-30 px-6 md:px-16 will-change-transform"
+        >
+          {/* TOP */}
+          <div className="pt-24 md:pt-28">
+            <div className="flex items-center gap-3 mb-10">
+              <span className="w-3 h-2 bg-blue-500 rounded-full"></span>
+              <p className="text-xs tracking-widest text-white">ABOUT US</p>
+            </div>
+
+            {/* 🔥 MORE BOLD */}
+            <h1 className="mt-4 font-extrabold text-xl md:text-[36px] leading-[120%] text-white max-w-md">
+              We offer a full <br />
+              range of business <br />
+              and consulting
+            </h1>
+          </div>
+
+          {/* BOTTOM */}
+          <div className="pb-12">
+            <p className="text-sm text-gray-300 max-w-sm mb-3 leading-relaxed">
+              Seravion is a people-first design studio <br />
+              that cares as much about your business <br />
+              and product as you do
+            </p>
+
+            <button className="bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-lg border border-white/20 text-sm">
+              Know More
+            </button>
+          </div>
+        </div>
+
         {/* DEVICE */}
         <div className="absolute inset-x-0 bottom-[-40px] flex justify-center z-20 pointer-events-none">
           <div
             ref={deviceRef}
             className="relative w-full max-w-4xl h-[260px] md:h-[380px]"
           >
-            {/* VIDEO */}
             <div
               ref={videoWrapperRef}
               className="absolute overflow-hidden rounded-[12px] shadow-inner z-0"
@@ -135,12 +178,11 @@ const Landing = () => {
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {/* IMAGE */}
             <Image
               src="/tab.png"
               alt="Device"

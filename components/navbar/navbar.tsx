@@ -21,13 +21,13 @@ const Navbar = () => {
       className="
         fixed top-0 left-0 w-full z-50
         backdrop-blur-[2px]
-        bg-white/[0.01]
-        border-b border-white/10
+        bg-white/[0.15]
+        border-b border-white/20
         shadow-[0_8px_32px_rgba(0,0,0,0.08)]
         transition-all duration-300
       "
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-3">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
@@ -85,7 +85,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden backdrop-blur-[2px] bg-white/[0.02] border-t border-white/10 px-6 py-4 flex flex-col gap-4 text-sm">
+        <div className="md:hidden backdrop-blur-[2px] bg-white/[0.15] border-t border-white/20 px-6 py-3 flex flex-col gap-4 text-sm">
           <Link href="#">About Us</Link>
           <Link href="#">Work+</Link>
           <Link href="#">Industries+</Link>
