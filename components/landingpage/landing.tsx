@@ -1,3 +1,7 @@
+// ==========================
+// FILE: components/landingpage/landing.tsx
+// FINAL FIX — KEEP STICKY, REMOVE GSAP PIN (NO FUNCTIONALITY CHANGE)
+// ==========================
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
@@ -49,9 +53,9 @@ const Landing = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=2600",
+          end: "+=2000",
           scrub: 1.6,
-          pin: true,
+          pin: false, // ✅ REMOVED GSAP PIN (sticky handles it)
           anticipatePin: 1,
           fastScrollEnd: true,
         },
@@ -104,9 +108,8 @@ const Landing = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-[320vh] bg-white">
+    <section ref={containerRef} className="relative h-[260vh] bg-white">
       <div className="sticky top-0 h-screen overflow-hidden">
-
         {/* INITIAL TEXT */}
         <div
           ref={initialTextRef}
@@ -127,14 +130,12 @@ const Landing = () => {
           ref={finalTextRef}
           className="absolute inset-0 flex flex-col justify-between z-30 px-6 md:px-16 will-change-transform"
         >
-          {/* TOP */}
           <div className="pt-24 md:pt-28">
             <div className="flex items-center gap-3 mb-10">
               <span className="w-3 h-2 bg-blue-500 rounded-full"></span>
               <p className="text-xs tracking-widest text-white">ABOUT US</p>
             </div>
 
-            {/* 🔥 MORE BOLD */}
             <h1 className="mt-4 font-extrabold text-xl md:text-[36px] leading-[120%] text-white max-w-md">
               We offer a full <br />
               range of business <br />
@@ -142,7 +143,6 @@ const Landing = () => {
             </h1>
           </div>
 
-          {/* BOTTOM */}
           <div className="pb-12">
             <p className="text-sm text-gray-300 max-w-sm mb-3 leading-relaxed">
               Seravion is a people-first design studio <br />
