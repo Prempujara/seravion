@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setDarkMode(window.scrollY > 100);
+      // Logic to toggle navbar appearance based on scroll height
+      // Past 80px, it gains the dark background seen in the video
+      setScrolled(window.scrollY > 80);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -18,82 +20,92 @@ const Navbar = () => {
 
   return (
     <header
-      className="
-        fixed top-0 left-0 w-full z-50
-        backdrop-blur-[2px]
-        bg-white/[0.15]
-        border-b border-white/20
-        shadow-[0_8px_32px_rgba(0,0,0,0.08)]
-        transition-all duration-300
-      "
+      className={`
+        fixed top-0 left-0 w-full z-[100]
+        transition-all duration-300 ease-in-out
+        ${scrolled 
+          ? "bg-[#0a121e]/90 backdrop-blur-md py-3 border-b border-white/10" 
+          : "bg-white py-4"}
+      `}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-3">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 md:px-16 lg:px-24">
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
+        {/* LOGO - Matching the exact Seravion brand colors */}
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-[#3B82F6] rounded-xl flex items-center justify-center shadow-lg">
+            {/* Geometric Brand Icon */}
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
           </div>
-          <div className="leading-tight">
-            <p className={`font-semibold text-base tracking-tight transition-colors duration-300 ${
-              darkMode ? "text-white" : "text-black"
+          <div className="flex flex-col leading-[1.1]">
+            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${
+              scrolled ? "text-white" : "text-[#0a121e]"
             }`}>
               Seravion
-            </p>
-            <p className={`text-[10px] uppercase tracking-widest transition-colors duration-300 ${
-              darkMode ? "text-gray-300" : "text-gray-500"
+            </span>
+            <span className={`text-[10px] uppercase tracking-[0.3em] font-medium transition-colors duration-300 ${
+              scrolled ? "text-gray-400" : "text-gray-500"
             }`}>
               Technologies
-            </p>
+            </span>
           </div>
         </Link>
 
-        {/* Nav Links */}
-        <nav className={`hidden md:flex items-center text-sm gap-8 font-light transition-colors duration-300 ${
-          darkMode ? "text-white" : "text-gray-800"
-        }`}>
-          <Link href="#" className="hover:opacity-70">About Us</Link>
-          <Link href="#" className="hover:opacity-70">Work+</Link>
-          <Link href="#" className="hover:opacity-70">Industries+</Link>
-          <Link href="#" className="hover:opacity-70">Services+</Link>
-          <Link href="#" className="hover:opacity-70">Blog</Link>
-          <Link href="#" className="hover:opacity-70">FAQs</Link>
+        {/* NAVIGATION LINKS */}
+        <nav className="hidden md:flex items-center gap-10">
+          {["About Us", "Work +", "Industries +", "Services +", "Blog", "FAQs"].map((item) => (
+            <Link 
+              key={item} 
+              href="#" 
+              className={`text-[13px] font-medium transition-colors duration-300 ${
+                scrolled ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-black"
+              }`}
+            >
+              {item}
+            </Link>
+          ))}
         </nav>
 
-        {/* Button */}
-        <button className="hidden md:block bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-2 rounded-lg transition">
-          Contact Us
-        </button>
+        {/* CONTACT BUTTON */}
+        <div className="hidden md:block">
+          <button className="bg-[#3B82F6] hover:bg-[#2563EB] text-white text-[13px] font-bold px-8 py-2.5 rounded-[10px] transition-all shadow-lg shadow-blue-600/20 active:scale-95">
+            Contact Us
+          </button>
+        </div>
 
-        {/* Mobile Toggle */}
+        {/* MOBILE MENU TOGGLE */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="md:hidden flex flex-col gap-1.5"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <span className={`w-6 h-0.5 transition-all ${
-            darkMode ? "bg-white" : "bg-black"
-          } ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`w-6 h-0.5 transition-all ${
-            darkMode ? "bg-white" : "bg-black"
-          } ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`w-6 h-0.5 transition-all ${
-            darkMode ? "bg-white" : "bg-black"
-          } ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          <span className={`w-6 h-0.5 transition-all ${scrolled ? "bg-white" : "bg-black"} ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+          <span className={`w-6 h-0.5 transition-all ${scrolled ? "bg-white" : "bg-black"} ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`w-6 h-0.5 transition-all ${scrolled ? "bg-white" : "bg-black"} ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
         </button>
 
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden backdrop-blur-[2px] bg-white/[0.15] border-t border-white/20 px-6 py-3 flex flex-col gap-4 text-sm">
-          <Link href="#">About Us</Link>
-          <Link href="#">Work+</Link>
-          <Link href="#">Industries+</Link>
-          <Link href="#">Services+</Link>
-          <Link href="#">Blog</Link>
-          <Link href="#">FAQs</Link>
-        </div>
-      )}
+      {/* MOBILE MENU OVERLAY */}
+      <div className={`
+        fixed inset-0 bg-[#0a121e] z-[90] flex flex-col items-center justify-center gap-8
+        transition-transform duration-500 ease-in-out md:hidden
+        ${menuOpen ? "translate-y-0" : "-translate-y-full"}
+      `}>
+        {["About Us", "Work +", "Industries +", "Services +", "Blog", "FAQs"].map((item) => (
+          <Link 
+            key={item} 
+            href="#" 
+            className="text-2xl font-bold text-white hover:text-blue-500"
+            onClick={() => setMenuOpen(false)}
+          >
+            {item}
+          </Link>
+        ))}
+        <button className="mt-4 bg-[#3B82F6] text-white text-lg font-bold px-12 py-4 rounded-xl">
+          Contact Us
+        </button>
+      </div>
     </header>
   );
 };

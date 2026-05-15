@@ -15,7 +15,7 @@ const Industries = () => {
   const [activeItem, setActiveItem] = useState<string | null>(null);
 
   return (
-    <section className="relative h-screen w-full bg-[#0a0a0a] text-white flex items-center px-6 md:px-16 lg:px-24 overflow-hidden">
+    <section className="relative h-screen w-full bg-[#0a121e] text-white flex items-center px-6 md:px-16 lg:px-24 overflow-hidden">
       
       <div className="grid grid-cols-1 md:grid-cols-[35%_35%_30%] gap-6 w-full max-w-[1400px] mx-auto py-10 h-full max-h-[90vh] items-center">
         
@@ -23,7 +23,7 @@ const Industries = () => {
         <div className="flex flex-col justify-between h-full py-4">
           <div>
             <div className="flex items-center gap-3 mb-6 md:mb-10">
-              <div className="w-8 h-[2px] bg-blue-600" />
+              <div className="w-4 h-[7px] rounded-full bg-[#1E90FF]" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400">
                 Industries
               </span>

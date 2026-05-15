@@ -115,7 +115,7 @@ const Landing = () => {
           ref={initialTextRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 px-6 -translate-y-16 md:-translate-y-28"
         >
-          <h1 className="font-semibold text-3xl md:text-[64px] leading-[120%] text-[#232323] max-w-4xl">
+          <h1 className="font-semibold text-3xl md:text-[64px] leading-[120%] text-[#394247] max-w-4xl">
             Engineering the future of <br />
             digital experience
           </h1>
