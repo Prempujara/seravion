@@ -1,6 +1,5 @@
 // ==========================
 // FILE: components/services/services.tsx
-// UPDATE — CENTER CONTENT IN PANELS (NO FUNCTIONALITY CHANGE)
 // ==========================
 "use client";
 
@@ -10,24 +9,23 @@ import gsap from "gsap";
 const data = [
   {
     number: "01",
-    title: "200+",
-    desc1: "Enterprise Products",
-    desc2: "Launched",
+    title: "20+",
+    desc1: "Projects delivered",
   },
   {
     number: "02",
-    title: "15+",
-    desc1: "Countries served globally",
+    title: "5+",
+    desc1: "Countries served",
   },
   {
     number: "03",
-    title: "98%",
-    desc1: "Client Retention Rate",
+    title: "15+",
+    desc1: "Years of Excellence",
   },
   {
     number: "04",
-    title: "8+",
-    desc1: "Years Deep - Tech Excellence",
+    title: "98%",
+    desc1: "Client Retention",
   },
 ];
 
@@ -36,47 +34,72 @@ const Services = () => {
   const contentsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
-    panelsRef.current.forEach((panel, index) => {
-      const content = contentsRef.current[index];
+    const panels = panelsRef.current;
+    const contents = contentsRef.current;
 
-      const tl = gsap.timeline({ paused: true });
+    const handleEnter = (activeIndex: number) => {
+      panels.forEach((panel, index) => {
+        gsap.killTweensOf(panel);
+        gsap.killTweensOf(contents[index]);
 
-      tl.to(panel, {
-        flex: 3,
-        duration: 0.6,
-        ease: "power3.out",
-      })
-        .to(
-          panelsRef.current.filter((p) => p !== panel),
-          {
-            flex: 0.6,
-            duration: 0.6,
-            ease: "power3.out",
-          },
-          0
-        )
-        .to(
-          content,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: "power3.out",
-          },
-          0.2
-        );
+        gsap.to(panel, {
+          flex: index === activeIndex ? 3 : 0.6,
+          duration: 0.6,
+          ease: "power3.out",
+        });
 
-      const enter = () => tl.play();
-      const leave = () => tl.reverse();
+        gsap.to(contents[index], {
+          opacity: index === activeIndex ? 1 : 0,
+          y: index === activeIndex ? 0 : 24,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      });
+    };
+
+    const handleLeave = () => {
+      panels.forEach((panel, index) => {
+        gsap.killTweensOf(panel);
+        gsap.killTweensOf(contents[index]);
+
+        gsap.to(panel, {
+          flex: 1,
+          duration: 0.6,
+          ease: "power3.out",
+        });
+
+        gsap.to(contents[index], {
+          opacity: 0,
+          y: 24,
+          duration: 0.3,
+          ease: "power3.out",
+        });
+      });
+    };
+
+    panels.forEach((panel, index) => {
+      const enter = () => handleEnter(index);
+      const leave = () => handleLeave();
 
       panel.addEventListener("mouseenter", enter);
       panel.addEventListener("mouseleave", leave);
 
-      return () => {
-        panel.removeEventListener("mouseenter", enter);
-        panel.removeEventListener("mouseleave", leave);
-      };
+      (panel as any).__enter = enter;
+      (panel as any).__leave = leave;
     });
+
+    return () => {
+      panels.forEach((panel) => {
+        panel.removeEventListener(
+          "mouseenter",
+          (panel as any).__enter
+        );
+        panel.removeEventListener(
+          "mouseleave",
+          (panel as any).__leave
+        );
+      });
+    };
   }, []);
 
   return (
@@ -123,10 +146,16 @@ const Services = () => {
               }}
               className="opacity-0 translate-y-6 flex flex-col items-center"
             >
-              <h2 className="text-4xl font-semibold mb-3">{item.title}</h2>
+              <h2 className="text-4xl font-semibold mb-3">
+                {item.title}
+              </h2>
+
               <p className="text-sm opacity-80">{item.desc1}</p>
+
               {item.desc2 && (
-                <p className="text-sm opacity-80">{item.desc2}</p>
+                <p className="text-sm opacity-80">
+                  {item.desc2}
+                </p>
               )}
             </div>
           </div>

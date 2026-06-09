@@ -55,7 +55,7 @@ const Landing = () => {
           start: "top top",
           end: "+=2000",
           scrub: 1.6,
-          pin: false, // ✅ REMOVED GSAP PIN (sticky handles it)
+          pin: false,
           anticipatePin: 1,
           fastScrollEnd: true,
         },
@@ -110,14 +110,14 @@ const Landing = () => {
   return (
     <section ref={containerRef} className="relative h-[260vh] bg-white">
       <div className="sticky top-0 h-screen overflow-hidden">
+        
         {/* INITIAL TEXT */}
         <div
           ref={initialTextRef}
           className="absolute inset-0 flex flex-col items-center justify-center text-center z-30 px-6 -translate-y-16 md:-translate-y-28"
         >
-          <h1 className="font-semibold text-3xl md:text-[64px] leading-[120%] text-[#394247] max-w-4xl">
-            Engineering the future of <br />
-            digital experience
+          <h1 className="font-semibold text-3xl md:text-[55px] leading-[120%] text-[#394247] max-w-4xl">
+            The Digital Engineering Partner Built for What's Coming Next
           </h1>
 
           <button className="mt-6 bg-blue-500 text-white px-5 py-2 rounded-lg">
@@ -133,24 +133,29 @@ const Landing = () => {
           <div className="pt-24 md:pt-28">
             <div className="flex items-center gap-3 mb-10">
               <span className="w-3 h-2 bg-blue-500 rounded-full"></span>
-              <p className="text-xs tracking-widest text-white">ABOUT US</p>
+
+              <p className="text-xs tracking-widest text-white">
+                ABOUT US
+              </p>
             </div>
 
-            <h1 className="mt-4 font-extrabold text-xl md:text-[36px] leading-[120%] text-white max-w-md">
-              We offer a full <br />
-              range of business <br />
-              and consulting
+            <h1 className="mt-4 font-extrabold text-xl md:text-[34px] leading-[120%] text-white max-w-md">
+              Transforming Ambitious <br />
+              Ideas into Intelligent <br />
+              Digital Products
             </h1>
           </div>
 
           <div className="pb-12">
             <p className="text-sm text-gray-300 max-w-sm mb-3 leading-relaxed">
-              Seravion is a people-first design studio <br />
-              that cares as much about your business <br />
-              and product as you do
+              Seravion Technologies is your end-to-end
+              <br />
+              technology partner. We architect, build and
+              <br />
+              scale digital products the redefine industries
             </p>
 
-            <button className="bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-lg border border-white/20 text-sm">
+            <button className="bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-lg border border-white/20 text-sm hover:bg-white hover:border-white hover:text-black transition-all duration-300">
               Know More
             </button>
           </div>

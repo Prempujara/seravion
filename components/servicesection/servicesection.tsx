@@ -68,7 +68,7 @@ const ServiceSection = () => {
             </p>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-black tracking-tighter leading-tight mb-8">
-            From motion design <br /> to AI-powered <br /> products
+            End-to-End<br /> Digital Engineering <br /> Tailored for your Ambition
           </h2>
           <p className="text-gray-500 text-[14px] leading-relaxed max-w-xs">
             we design and build interfaces for the future.
