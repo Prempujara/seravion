@@ -1,5 +1,9 @@
 // ==========================
 // FILE: components/services/services.tsx
+<<<<<<< HEAD
+=======
+// UPDATE — CENTER CONTENT IN PANELS (NO FUNCTIONALITY CHANGE)
+>>>>>>> 825039b51157e34744ef3742dd2baeeee7a9f614
 // ==========================
 "use client";
 
@@ -9,6 +13,7 @@ import gsap from "gsap";
 const data = [
   {
     number: "01",
+<<<<<<< HEAD
     title: "20+",
     desc1: "Projects delivered",
   },
@@ -26,6 +31,26 @@ const data = [
     number: "04",
     title: "98%",
     desc1: "Client Retention",
+=======
+    title: "200+",
+    desc1: "Enterprise Products",
+    desc2: "Launched",
+  },
+  {
+    number: "02",
+    title: "15+",
+    desc1: "Countries served globally",
+  },
+  {
+    number: "03",
+    title: "98%",
+    desc1: "Client Retention Rate",
+  },
+  {
+    number: "04",
+    title: "8+",
+    desc1: "Years Deep - Tech Excellence",
+>>>>>>> 825039b51157e34744ef3742dd2baeeee7a9f614
   },
 ];
 
@@ -42,6 +67,7 @@ const Services = () => {
         gsap.killTweensOf(panel);
         gsap.killTweensOf(contents[index]);
 
+<<<<<<< HEAD
         gsap.to(panel, {
           flex: index === activeIndex ? 3 : 0.6,
           duration: 0.6,
@@ -80,12 +106,48 @@ const Services = () => {
     panels.forEach((panel, index) => {
       const enter = () => handleEnter(index);
       const leave = () => handleLeave();
+=======
+      tl.to(panel, {
+        flex: 3,
+        duration: 0.6,
+        ease: "power3.out",
+      })
+        .to(
+          panelsRef.current.filter((p) => p !== panel),
+          {
+            flex: 0.6,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          0
+        )
+        .to(
+          content,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: "power3.out",
+          },
+          0.2
+        );
+
+      const enter = () => tl.play();
+      const leave = () => tl.reverse();
+>>>>>>> 825039b51157e34744ef3742dd2baeeee7a9f614
 
       panel.addEventListener("mouseenter", enter);
       panel.addEventListener("mouseleave", leave);
 
+<<<<<<< HEAD
       (panel as any).__enter = enter;
       (panel as any).__leave = leave;
+=======
+      return () => {
+        panel.removeEventListener("mouseenter", enter);
+        panel.removeEventListener("mouseleave", leave);
+      };
+>>>>>>> 825039b51157e34744ef3742dd2baeeee7a9f614
     });
 
     return () => {
@@ -146,6 +208,7 @@ const Services = () => {
               }}
               className="opacity-0 translate-y-6 flex flex-col items-center"
             >
+<<<<<<< HEAD
               <h2 className="text-4xl font-semibold mb-3">
                 {item.title}
               </h2>
@@ -156,6 +219,12 @@ const Services = () => {
                 <p className="text-sm opacity-80">
                   {item.desc2}
                 </p>
+=======
+              <h2 className="text-4xl font-semibold mb-3">{item.title}</h2>
+              <p className="text-sm opacity-80">{item.desc1}</p>
+              {item.desc2 && (
+                <p className="text-sm opacity-80">{item.desc2}</p>
+>>>>>>> 825039b51157e34744ef3742dd2baeeee7a9f614
               )}
             </div>
           </div>
