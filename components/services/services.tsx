@@ -26,27 +26,9 @@ const data = [
     number: "04",
     title: "98%",
     desc1: "Client Retention",
-    title: "200+",
-    desc1: "Enterprise Products",
     desc2: "Launched",
   },
-  {
-    number: "02",
-    title: "15+",
-    desc1: "Countries served globally",
-  },
-  {
-    number: "03",
-    title: "98%",
-    desc1: "Client Retention Rate",
-  },
-  {
-    number: "04",
-    title: "8+",
-    desc1: "Years Deep - Tech Excellence",
-  },
 ];
-
 const Services = () => {
   const panelsRef = useRef<HTMLDivElement[]>([]);
   const contentsRef = useRef<HTMLDivElement[]>([]);

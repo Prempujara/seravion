@@ -69,28 +69,36 @@ const SaasProduct = () => {
 
         {/* 3. FLOATING ASSETS */}
         <div 
-          ref={(el) => (floatRefs.current[0] = el)}
+          ref={(el) => {
+  floatRefs.current[0] = el;
+}}
           className="absolute -left-70 top-[2%] w-157px md:w-28 z-30"
         >
           <img src="/image 8.png" alt="Icon Left" className="w-full h-auto" />
         </div>
 
         <div 
-          ref={(el) => (floatRefs.current[1] = el)}
+          ref={(el) => {
+  floatRefs.current[1] = el;
+}}
           className="absolute -left-53 bottom-[25%] w-32 md:w-55 z-30 rounded-xl overflow-hidden"
         >
           <img src="/Rectangle 32.png" alt="Stats Left" className="w-full h-auto" />
         </div>
 
         <div 
-          ref={(el) => (floatRefs.current[2] = el)}
+          ref={(el) => {
+  floatRefs.current[2] = el;
+}}
           className="absolute -right-50 top-[5%] w-32 md:w-50 z-30 rounded-xl overflow-hidden"
         >
           <img src="/Rectangle 33.png" alt="Stats Right" className="w-full h-auto" />
         </div>
 
         <div 
-          ref={(el) => (floatRefs.current[3] = el)}
+          ref={(el) => {
+  floatRefs.current[3] = el;
+}}
           className="absolute -right-65 bottom-[10%] w-16 md:w-24 z-30"
         >
           <img src="/image 7.png" alt="Icon Right" className="w-full h-auto rotate-[12deg]" />

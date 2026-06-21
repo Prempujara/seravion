@@ -10,19 +10,21 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Landing = () => {
-  const containerRef = useRef(null);
-  const initialTextRef = useRef(null);
-  const finalTextRef = useRef(null);
-  const deviceRef = useRef(null);
-  const videoWrapperRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+const initialTextRef = useRef<HTMLDivElement | null>(null);
+const finalTextRef = useRef<HTMLDivElement | null>(null);
+const deviceRef = useRef<HTMLDivElement | null>(null);
+const videoWrapperRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
       const device = deviceRef.current;
-      const videoWrapper = videoWrapperRef.current;
-      const finalText = finalTextRef.current;
+const videoWrapper = videoWrapperRef.current;
+const finalText = finalTextRef.current;
+
+if (!device || !videoWrapper || !finalText) return;
 
       const getScale = () => {
         const rect = videoWrapper.getBoundingClientRect();

@@ -13,17 +13,19 @@ import Contact from "@/components/contact/contact";
 
 export default function Home() {
   return (
+    <>
+      <Navbar />
       <Landing />
       <LogoStrip />
       <Services />
       <Work />
-      <ServiceSection /> 
+      <ServiceSection />
       <SaasProduct />
-      <Industries/>
+      <Industries />
       <Testimonials />
       <Blogs />
       <Contact />
       <Footer />
-    </main>
+    </>
   );
 }
