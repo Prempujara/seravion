@@ -1,0 +1,51 @@
+"use client";
+
+export default function AboutGallery() {
+  return (
+    <section className="bg-white py-24">
+      <div className="w-full px-4 md:px-6">
+
+        <div className="flex gap-3 items-start">
+
+          {/* Image 1 */}
+          <div className="flex-[1.55]">
+            <img
+              src="/aboutus1.png"
+              alt="Gallery 1"
+              className="w-full h-[305px] object-cover"
+            />
+          </div>
+
+          {/* Image 2 */}
+          <div className="flex-[1.15]">
+            <img
+              src="/aboutus2.png"
+              alt="Gallery 2"
+              className="w-full h-[305px] object-cover"
+            />
+          </div>
+
+          {/* Image 3 */}
+          <div className="flex-[1.55]">
+            <img
+              src="/aboutus3.png"
+              alt="Gallery 3"
+              className="w-full h-[305px] object-cover"
+            />
+          </div>
+
+          {/* Image 4 */}
+          <div className="flex-[0.75]">
+            <img
+              src="/aboutus4.png"
+              alt="Gallery 4"
+              className="w-full h-[305px] object-cover"
+            />
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
